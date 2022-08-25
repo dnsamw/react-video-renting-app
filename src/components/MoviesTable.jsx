@@ -1,25 +1,68 @@
 import React, { Component } from 'react';
+import { getMovies } from '../services/fakeMovieService';
 
 class MoviesTable extends Component {
+  state = {
+    movies: getMovies(),
+  };
+
+  handleLike = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movie };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
+
+  handleDelete = (movie) => {
+    const movies = [...this.state.movies];
+    const filteredMovies = movies.filter((m) => m._id !== movie._id);
+    this.setState({ movies: filteredMovies });
+  };
+
   render() {
+    const { movies } = this.state;
     return (
       <>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Title</th>
+              <th scope="col">Genre</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Rate</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            {movies.map((movie) => (
+              <tr key={movie._id}>
+                <td>{movie.title}</td>
+                <td>{movie.genre.name}</td>
+                <td>{movie.numberInStock}</td>
+                <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <i
+                    className={
+                      movie.liked
+                        ? 'fa fa-heart clickable'
+                        : 'fa fa-heart-o clickable'
+                    }
+                    aria-hidden="true"
+                    onClick={() => this.handleLike(movie)}
+                  ></i>
+                </td>
+                <button
+                  onClick={() => this.handleDelete(movie)}
+                  style={{ backgroundColor: 'red', color: 'white' }}
+                  type="button"
+                  className="btn btn-sm m-1"
+                >
+                  Delete
+                </button>
+              </tr>
+            ))}
           </tbody>
         </table>
       </>
