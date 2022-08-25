@@ -1,3 +1,1 @@
-# react-jqtngq
-
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-jqtngq)
+Video renting app with react and redux
