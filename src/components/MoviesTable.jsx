@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
+import { getMovies } from '../services/fakeMovieService';
 
 class MoviesTable extends Component {
+  state = {
+    movies: getMovies(),
+  };
   render() {
+    const { movies } = this.state;
     return (
       <>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Title</th>
+              <th scope="col">Genre</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Rate</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            {movies.map((movie) => (
+              <tr key={movie._id}>
+                <th scope="row">{movie.title}</th>
+                <td>{movie.genre.name}</td>
+                <td>{movie.numberInStock}</td>
+                <td>{movie.dailyRentalRate}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </>
