@@ -1,2 +1,1 @@
-# react-jqtngq
-
+Video renting app with react and redux
