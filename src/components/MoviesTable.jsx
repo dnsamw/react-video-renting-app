@@ -16,15 +16,25 @@ class MoviesTable extends Component {
               <th scope="col">Genre</th>
               <th scope="col">Stock</th>
               <th scope="col">Rate</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {movies.map((movie) => (
               <tr key={movie._id}>
-                <th scope="row">{movie.title}</th>
+                <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td><i class="fa fa-heart" aria-hidden="true"></i></td>
+                <button
+                  style={{ backgroundColor: 'red', color: 'white' }}
+                  type="button"
+                  className="btn btn-sm m-1"
+                >
+                  Delete
+                </button>
               </tr>
             ))}
           </tbody>
