@@ -5,6 +5,15 @@ class MoviesTable extends Component {
   state = {
     movies: getMovies(),
   };
+
+  handleLike = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movie };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
+
   render() {
     const { movies } = this.state;
     return (
@@ -27,7 +36,17 @@ class MoviesTable extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
-                <td><i class="fa fa-heart" aria-hidden="true"></i></td>
+                <td>
+                  <i
+                    className={
+                      movie.liked
+                        ? 'fa fa-heart clickable'
+                        : 'fa fa-heart-o clickable'
+                    }
+                    aria-hidden="true"
+                    onClick={() => this.handleLike(movie)}
+                  ></i>
+                </td>
                 <button
                   style={{ backgroundColor: 'red', color: 'white' }}
                   type="button"

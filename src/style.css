@@ -14,3 +14,7 @@ input[type='reset'] {
   background-color: red;
   color: white;
 }
+
+.clickable {
+  cursor: pointer;
+}
