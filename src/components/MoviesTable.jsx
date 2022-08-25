@@ -14,6 +14,12 @@ class MoviesTable extends Component {
     this.setState({ movies });
   };
 
+  handleDelete = (movie) => {
+    const movies = [...this.state.movies];
+    const filteredMovies = movies.filter((m) => m._id !== movie._id);
+    this.setState({ movies: filteredMovies });
+  };
+
   render() {
     const { movies } = this.state;
     return (
@@ -48,6 +54,7 @@ class MoviesTable extends Component {
                   ></i>
                 </td>
                 <button
+                  onClick={() => this.handleDelete(movie)}
                   style={{ backgroundColor: 'red', color: 'white' }}
                   type="button"
                   className="btn btn-sm m-1"
