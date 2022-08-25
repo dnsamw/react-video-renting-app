@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
 
+import getPagination from '../utils/paginate';
+
 class MoviesTable extends Component {
   state = {
     movies: getMovies(),
     genres: getGenres(),
+    pageSize: 4,
+    startPageIndex: 0,
   };
 
   handleLike = (movie) => {
@@ -27,12 +31,14 @@ class MoviesTable extends Component {
   };
 
   render() {
-    const { movies, genres } = this.state;
+    const { movies, genres, pageSize, startPageIndex } = this.state;
+    console.log(getPagination(startPageIndex, pageSize, movies));
     return (
       <>
         <div className="row mt-2">
-          <div className="col-3">
+          <div className="col-2">
             <ul className="list-group">
+              <li className="list-group-item clickable">All Genres</li>
               {genres.map((genre) => (
                 <li
                   onClick={() => this.handleSelectGenre(genre)}
@@ -74,18 +80,41 @@ class MoviesTable extends Component {
                         onClick={() => this.handleLike(movie)}
                       ></i>
                     </td>
-                    <button
-                      onClick={() => this.handleDelete(movie)}
-                      style={{ backgroundColor: 'red', color: 'white' }}
-                      type="button"
-                      className="btn btn-sm m-1"
-                    >
-                      Delete
-                    </button>
+                    <td>
+                      <button
+                        onClick={() => this.handleDelete(movie)}
+                        style={{ backgroundColor: 'red', color: 'white' }}
+                        type="button"
+                        className="btn btn-sm"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <>
+              <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                  <li className="page-item">
+                    <a className="page-link" href="#">
+                      1
+                    </a>
+                  </li>
+                  <li className="page-item">
+                    <a className="page-link" href="#">
+                      2
+                    </a>
+                  </li>
+                  <li className="page-item">
+                    <a className="page-link" href="#">
+                      3
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </>
           </div>
         </div>
       </>
