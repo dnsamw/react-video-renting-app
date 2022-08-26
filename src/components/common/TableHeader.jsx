@@ -1,12 +1,26 @@
 import React from 'react';
 
 //headerElements - Array
-function TableHeader({ headerElements }) {
+//onSort - Function
+
+function TableHeader({ headerElements, onSort }) {
   return (
     <thead>
       <tr>
         {headerElements.map((element) => (
-          <th scope="col">{element.label}</th>
+          <th
+            className="clickable"
+            onClick={
+              element.label
+                ? () => {
+                    onSort(element.path);
+                  }
+                : null
+            }
+            scope="col"
+          >
+            {element.label}
+          </th>
         ))}
       </tr>
     </thead>

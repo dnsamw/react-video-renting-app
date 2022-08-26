@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+
 import { getMovies } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
 
@@ -15,6 +17,7 @@ class MoviesTable extends Component {
     pageSize: 4,
     startPageIndex: 0,
     selectedGenre: null,
+    sortColumn: { path: 'title', order: 'asc' },
   };
 
   handleLike = (movie) => {
@@ -38,6 +41,24 @@ class MoviesTable extends Component {
   handlePagination = (pageNumber) => {
     const startIndex = pageNumber * this.state.pageSize;
     this.setState({ startPageIndex: startIndex });
+  };
+
+  handleSort = (path) => {
+    const movies = [...this.state.movies];
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.path === path) {
+      console.log(path, sortColumn.path);
+      if (sortColumn.order === 'asc') {
+        sortColumn.order = 'desc';
+      } else {
+        sortColumn.order = 'asc';
+      }
+    } else {
+      sortColumn.order = 'asc';
+    }
+    const result = _.orderBy(movies, [path], [sortColumn.order]);
+    //this.setState({ movies: result });
+    console.log(sortColumn.order);
   };
 
   render() {
@@ -69,6 +90,7 @@ class MoviesTable extends Component {
                 data={pagination}
                 onLike={this.handleLike}
                 onDelete={this.handleDelete}
+                onSort={this.handleSort}
               />
               <Paginate
                 pages={filtered}
