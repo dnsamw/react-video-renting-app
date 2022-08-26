@@ -10,6 +10,7 @@ class MoviesTable extends Component {
     genres: getGenres(),
     pageSize: 4,
     startPageIndex: 0,
+    selectedGenre: null,
   };
 
   handleLike = (movie) => {
@@ -27,7 +28,7 @@ class MoviesTable extends Component {
   };
 
   handleSelectGenre = (genre) => {
-    console.log(genre);
+    this.setState({ selectedGenre: genre, startPageIndex: 0 });
   };
 
   handlePagination = (pageNumber) => {
@@ -36,16 +37,25 @@ class MoviesTable extends Component {
   };
 
   render() {
-    const { movies, genres, pageSize, startPageIndex } = this.state;
+    const { movies, genres, pageSize, startPageIndex, selectedGenre } =
+      this.state;
+    const filtered = movies.filter((movie) =>
+      selectedGenre ? movie.genre._id === selectedGenre._id : movies
+    );
 
-    const pagination = getPagination(startPageIndex, pageSize, movies);
+    const pagination = getPagination(startPageIndex, pageSize, filtered);
 
     return (
       <>
         <div className="row mt-2">
           <div className="col-2">
             <ul className="list-group">
-              <li className="list-group-item clickable">All Genres</li>
+              <li
+                onClick={() => this.handleSelectGenre(null)}
+                className="list-group-item clickable"
+              >
+                All Genres
+              </li>
               {genres.map((genre) => (
                 <li
                   onClick={() => this.handleSelectGenre(genre)}
@@ -104,7 +114,7 @@ class MoviesTable extends Component {
             <>
               <nav aria-label="Page navigation example">
                 <ul className="pagination">
-                  {Array(Math.ceil(movies.length / 4))
+                  {Array(Math.ceil(filtered.length / 4))
                     .fill('')
                     .map((_, index) => (
                       <li
