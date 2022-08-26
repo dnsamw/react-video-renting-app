@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 //data - Array
 //onLike - Function
@@ -9,7 +10,9 @@ function TableBody({ data, onLike, onDelete }) {
     <tbody>
       {data.map((item) => (
         <tr key={item._id}>
-          <td>{item.title}</td>
+          <td>
+            <Link to={`/movies/${item._id}`}>{item.title}</Link>
+          </td>
           <td>{item.genre.name}</td>
           <td>{item.numberInStock}</td>
           <td>{item.dailyRentalRate}</td>
