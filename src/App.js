@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import './style.css';
 
 import NavBar from './components/NavBar';
 import Movies from './components/Movies';
 
-export default function App() {
-  return (
-    <>
-      <NavBar />
-      <div className="container">
-        <Movies />
-      </div>
-    </>
-  );
+class App extends Component {
+  render() {
+    return (
+      <>
+        <NavBar />
+        <div className="container">
+          <Movies />
+          {/* <Switch>
+        <Route path="/" component={Movies} />
+        </Switch> */}
+        </div>
+      </>
+    );
+  }
 }
+
+export default App;
