@@ -46,30 +46,32 @@ class MoviesTable extends Component {
   handleSort = (path) => {
     const movies = [...this.state.movies];
     const sortColumn = { ...this.state.sortColumn };
-    if (sortColumn.path === path) {
-      console.log(path, sortColumn.path);
-      if (sortColumn.order === 'asc') {
-        sortColumn.order = 'desc';
-      } else {
-        sortColumn.order = 'asc';
-      }
-    } else {
+    if (sortColumn.path === path)
+      sortColumn.order = sortColumn.order === 'asc' ? 'desc' : 'asc';
+    if (sortColumn.path !== path) {
+      sortColumn.path = path;
       sortColumn.order = 'asc';
     }
-    const result = _.orderBy(movies, [path], [sortColumn.order]);
-    //this.setState({ movies: result });
-    console.log(sortColumn.order);
+    this.setState({ sortColumn });
   };
 
   render() {
-    const { movies, genres, pageSize, startPageIndex, selectedGenre } =
-      this.state;
+    const {
+      movies,
+      genres,
+      pageSize,
+      startPageIndex,
+      selectedGenre,
+      sortColumn,
+    } = this.state;
 
     const filtered = movies.filter((movie) =>
       selectedGenre ? movie.genre._id === selectedGenre._id : movies
     );
 
-    const pagination = getPagination(startPageIndex, pageSize, filtered);
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
+    const pagination = getPagination(startPageIndex, pageSize, sorted);
 
     return (
       <>
@@ -91,6 +93,7 @@ class MoviesTable extends Component {
                 onLike={this.handleLike}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
+                sortColumn={sortColumn}
               />
               <Paginate
                 pages={filtered}

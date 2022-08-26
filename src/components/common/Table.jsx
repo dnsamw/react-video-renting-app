@@ -7,8 +7,9 @@ import TableBody from './TableBody';
 //onLike - Function
 //onDelete - Function
 //onSort - Function
+//sortColumn - Object
 
-function Table({ data, onLike, onDelete , onSort}) {
+function Table({ data, onLike, onDelete, onSort, sortColumn }) {
   const headerElements = [
     { path: 'title', label: 'Title' },
     { path: 'genre.name', label: 'Genre' },
@@ -18,10 +19,13 @@ function Table({ data, onLike, onDelete , onSort}) {
     { path: 'delete', label: '' },
   ];
 
-
   return (
     <table className="table">
-      <TableHeader headerElements={headerElements} onSort={onSort} />
+      <TableHeader
+        headerElements={headerElements}
+        onSort={onSort}
+        sortColumn={sortColumn}
+      />
       <TableBody data={data} onLike={onLike} onDelete={onDelete} />
     </table>
   );
