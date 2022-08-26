@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-2">
-      <Link className="navbar-brand" to="/">
+      <NavLink className="navbar-brand" to="/">
         Vidly
-      </Link>
+      </NavLink>
       <button
         className="navbar-toggler"
         type="button"
@@ -21,19 +21,24 @@ function NavBar() {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link className="nav-link" to="/movies">
+            <NavLink className="nav-link" to="/movies">
               Movies
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/rentals">
+            <NavLink className="nav-link" to="/rentals">
               Rentals
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/customers">
+            <NavLink className="nav-link" to="/customers">
               Customers
-            </Link>
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/login">
+              Login
+            </NavLink>
           </li>
         </ul>
       </div>
