@@ -52,28 +52,33 @@ class MoviesTable extends Component {
 
     return (
       <>
-        <div className="row mt-3">
-          <div className="col-3">
-            <ListGroup
-              listItems={genres}
-              slectedItem={selectedGenre}
-              onSelectListItem={this.handleSelectGenre}
-            />
+        {movies.length === 0 ? (
+          <p>There are no movies show in the database</p>
+        ) : (
+          <div className="row mt-3">
+            <div className="col-3">
+              <ListGroup
+                listItems={genres}
+                slectedItem={selectedGenre}
+                onSelectListItem={this.handleSelectGenre}
+              />
+            </div>
+            <div className="col">
+              {<p>Showing movies {movies.length} in the database.</p>}
+              <Table
+                data={pagination}
+                onLike={this.handleLike}
+                onDelete={this.handleDelete}
+              />
+              <Paginate
+                pages={filtered}
+                onPaginate={this.handlePagination}
+                startPageIndex={startPageIndex}
+                pageSize={pageSize}
+              />
+            </div>
           </div>
-          <div className="col">
-            <Table
-              data={pagination}
-              onLike={this.handleLike}
-              onDelete={this.handleDelete}
-            />
-            <Paginate
-              pages={filtered}
-              onPaginate={this.handlePagination}
-              startPageIndex={startPageIndex}
-              pageSize={pageSize}
-            />
-          </div>
-        </div>
+        )}
       </>
     );
   }

@@ -5,7 +5,6 @@ class Movies extends Component {
   render() {
     return (
       <>
-        <h1>Movies Component </h1>
         <MoviesTable />
       </>
     );
