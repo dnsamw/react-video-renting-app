@@ -21,7 +21,7 @@ function NavBar() {
         <ul className="navbar-nav">
           <li className="nav-item">
             <a className="nav-link" href="#">
-              Features
+              Movies
             </a>
           </li>
           <li className="nav-item">
