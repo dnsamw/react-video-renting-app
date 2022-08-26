@@ -1,14 +1,16 @@
 import React from 'react';
-import "./style.css"
+import './style.css';
+
+import NavBar from './components/NavBar';
 import Movies from './components/Movies';
 
 export default function App() {
   return (
-    <div>
+    <>
+      <NavBar />
       <div className="container">
-        <h1>App Component</h1>
         <Movies />
       </div>
-    </div>
+    </>
   );
 }
