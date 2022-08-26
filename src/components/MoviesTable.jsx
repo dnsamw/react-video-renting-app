@@ -30,9 +30,16 @@ class MoviesTable extends Component {
     console.log(genre);
   };
 
+  handlePagination = (pageNumber) => {
+    const startIndex = pageNumber * this.state.pageSize;
+    this.setState({ startPageIndex: startIndex });
+  };
+
   render() {
     const { movies, genres, pageSize, startPageIndex } = this.state;
-    console.log(getPagination(startPageIndex, pageSize, movies));
+
+    const pagination = getPagination(startPageIndex, pageSize, movies);
+
     return (
       <>
         <div className="row mt-2">
@@ -63,7 +70,7 @@ class MoviesTable extends Component {
                 </tr>
               </thead>
               <tbody>
-                {movies.map((movie) => (
+                {pagination.map((movie) => (
                   <tr key={movie._id}>
                     <td>{movie.title}</td>
                     <td>{movie.genre.name}</td>
@@ -97,21 +104,17 @@ class MoviesTable extends Component {
             <>
               <nav aria-label="Page navigation example">
                 <ul className="pagination">
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
+                  {Array(Math.ceil(movies.length / 4))
+                    .fill('')
+                    .map((_, index) => (
+                      <li
+                        onClick={() => this.handlePagination(index)}
+                        key={index}
+                        className="page-item"
+                      >
+                        <span className="page-link clickable">{1 + index}</span>
+                      </li>
+                    ))}
                 </ul>
               </nav>
             </>
