@@ -17,11 +17,11 @@ class LoginForm extends Component {
   validateForm() {
     const options = { abortEarly: false };
     const result = Joi.validate(this.state.account, this.schema, options);
+    //console.log(result);
+    if (!result.error) return null;
 
     const errors = {};
-    if (result.error != null)
-      for (let item of result.error.details)
-        errors[item.path[0]] = item.message;
+    for (let item of result.error.details) errors[item.path[0]] = item.message;
 
     return errors;
   }
@@ -29,6 +29,7 @@ class LoginForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const errors = this.validateForm();
+
     this.setState({ errors: errors || {} }, this.print);
 
     if (errors === {}) console.log('Form Sunmitted');
@@ -49,14 +50,14 @@ class LoginForm extends Component {
     if (error) errors[name] = error;
     if (!error) delete errors[name];
 
-    console.log('BSE', errors);
+    //console.log('BSE', errors);
     const account = { ...this.state.account };
     account[name] = value;
     this.setState({ account, errors }, this.print);
   };
 
   print() {
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   render() {
@@ -79,7 +80,12 @@ class LoginForm extends Component {
             onChange={this.handleChange}
             error={errors?.password}
           />
-          <button className="btn btn-primary mt-2">Login</button>
+          <button
+            disabled={this.validateForm()}
+            className="btn btn-primary mt-2"
+          >
+            Login
+          </button>
         </form>
       </>
     );
