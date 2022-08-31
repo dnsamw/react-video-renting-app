@@ -16,9 +16,7 @@ class Input extends Component {
             className="form-control"
           />
         </div>
-        {error && (
-          <div className="alert alert-danger mt-1 p-1">{error}</div>
-        )}
+        {error && <div className="alert alert-danger mt-2 p-1">{error}</div>}
       </>
     );
   }

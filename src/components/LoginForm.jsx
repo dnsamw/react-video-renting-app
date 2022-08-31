@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 
+import Input from './common/Input';
+
 class LoginForm extends Component {
   state = {
     account: { username: '', password: '' },
@@ -63,38 +65,20 @@ class LoginForm extends Component {
       <>
         <h1>Login Form</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username"></label>Username
-            <input
-              name="username"
-              id="username"
-              type="text"
-              className="form-control"
-              value={account.username}
-              onChange={this.handleChange}
-            />
-            {errors?.username && (
-              <div className="alert alert-danger mt-1 p1">
-                {errors?.username}
-              </div>
-            )}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password"></label>Password
-            <input
-              name="password"
-              id="password"
-              type="text"
-              className="form-control"
-              value={account.password}
-              onChange={this.handleChange}
-            />
-            {errors?.password && (
-              <div className="alert alert-danger mt-1 p1">
-                {errors?.password}
-              </div>
-            )}
-          </div>
+          <Input
+            label="Username"
+            name="username"
+            value={account.username}
+            onChange={this.handleChange}
+            error={errors?.username}
+          />
+          <Input
+            label="Password"
+            name="password"
+            value={account.password}
+            onChange={this.handleChange}
+            error={errors?.password}
+          />
           <button className="btn btn-primary mt-2">Login</button>
         </form>
       </>
