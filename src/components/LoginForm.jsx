@@ -28,13 +28,29 @@ class LoginForm extends Component {
     e.preventDefault();
     const errors = this.validateForm();
     this.setState({ errors: errors || {} }, this.print);
+
+    if (errors === {}) console.log('Form Sunmitted');
   };
+
+  validateProperty(name, value) {
+    const subSchema = this.schema[name];
+    const result = Joi.validate(value, subSchema);
+    const errorMessage = result.error?.details[0].message;
+    return errorMessage ? errorMessage : null;
+  }
 
   handleChange = ({ currentTarget: input }) => {
     const { name, value } = input;
+
+    const errors = { ...this.state.errors };
+    const error = this.validateProperty(name, value);
+    if (error) errors[name] = error;
+    if (!error) delete errors[name];
+
+    console.log('BSE', errors);
     const account = { ...this.state.account };
     account[name] = value;
-    this.setState({ account }, this.print);
+    this.setState({ account, errors }, this.print);
   };
 
   print() {
@@ -42,7 +58,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { account } = this.state;
+    const { account, errors } = this.state;
     return (
       <>
         <h1>Login Form</h1>
@@ -57,6 +73,11 @@ class LoginForm extends Component {
               value={account.username}
               onChange={this.handleChange}
             />
+            {errors?.username && (
+              <div className="alert alert-danger mt-1 p1">
+                {errors?.username}
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="password"></label>Password
@@ -68,6 +89,11 @@ class LoginForm extends Component {
               value={account.password}
               onChange={this.handleChange}
             />
+            {errors?.password && (
+              <div className="alert alert-danger mt-1 p1">
+                {errors?.password}
+              </div>
+            )}
           </div>
           <button className="btn btn-primary mt-2">Login</button>
         </form>
